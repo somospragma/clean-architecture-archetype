@@ -101,6 +101,19 @@
                 </executions>
                 <version>0.8.12</version>
             </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId> <!-- It is an alternative to trivy if you want to run it by mvn command but it is more slower -->
+                <artifactId>dependency-check-maven</artifactId>
+                <version>11.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
