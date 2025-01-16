@@ -1,0 +1,38 @@
+resilience4j:
+  # Circuit Breaker Configuration
+  circuitbreaker:
+    instances:
+      chuckNorrisService:  # Name of the circuit breaker instance
+        slidingWindowType: COUNT_BASED  # Type of sliding window (COUNT_BASED or TIME_BASED)
+        slidingWindowSize: 10  # Number of calls in the sliding window
+        failureRateThreshold: 50  # Percentage of failures required to open circuit
+        waitDurationInOpenState: 5000  # Time in milliseconds to wait before transitioning to half-open
+        permittedNumberOfCallsInHalfOpenState: 3  # Number of calls allowed in half-open state
+        automaticTransitionFromOpenToHalfOpenEnabled: true  # Enable automatic transition from open to half-open
+        
+  # Rate Limiter Configuration
+  ratelimiter:
+    instances:
+      chuckNorrisService:  # Name of the rate limiter instance
+        limitForPeriod: 10  # Number of calls allowed in the time period
+        limitRefreshPeriod: 1s  # Time period for the limit refresh
+        timeoutDuration: 500ms  # Max wait time when acquiring a permission
+        
+  # Bulkhead Configuration
+  bulkhead:
+    instances:
+      chuckNorrisService:  # Name of the bulkhead instance
+        maxConcurrentCalls: 10  # Maximum number of concurrent calls
+        maxWaitDuration: 10ms  # Maximum amount of time to wait for permission
+        
+  # Retry Configuration
+  retry:
+    instances:
+      chuckNorrisService:  # Name of the retry instance
+        maxAttempts: 3  # Maximum number of retry attempts
+        waitDuration: 1s  # Duration to wait between retries
+        retryExceptions:  # List of exceptions to retry on
+          - java.io.IOException
+          - java.net.SocketTimeoutException
+        ignoreExceptions:  # List of exceptions to not retry on
+          - java.lang.IllegalArgumentException
